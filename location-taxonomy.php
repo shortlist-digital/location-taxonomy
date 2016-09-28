@@ -22,7 +22,10 @@ class LocationTaxonomy
 
     public function add_location_to_context($context)
     {
-        $context['locations'] = get_terms('location', array('orderby' => 'term_group'));
+        global $post;
+        $context['locations'] = get_the_terms($post->ID, 'location');
+        echo "<pre>";
+        return $context;
     }
 
     public function location_permalink($permalink, $post_id, $leavename)
@@ -83,7 +86,9 @@ class LocationTaxonomy
          'show_admin_column'          => true,
          'show_in_nav_menus'          => true,
          'show_tagcloud'              => false,
-         'rewrite'                      => true
+         'rewrite'                      => true,
+         'rest_base'                      => 'location',
+         'rest_controller_class' => 'WP_REST_Terms_Controller',
        );
         register_taxonomy('location', array( 'post', ' category', ' page' ), $args);
     }
