@@ -15,6 +15,7 @@ class LocationTaxonomy
     public function __construct()
     {
         add_action('init', array($this, 'register_custom_taxonomy'));
+        add_action('init', array($this, 'regisiter_custom_fields'));
     }
 
     public function register_custom_taxonomy()
@@ -48,7 +49,8 @@ class LocationTaxonomy
          'show_ui'                    => true,
          'show_admin_column'          => true,
          'show_in_nav_menus'          => true,
-         'show_tagcloud'              => false
+         'show_tagcloud'              => false,
+         'rewrite'                      => true
        );
         register_taxonomy('location', array( 'post', ' category', ' page' ), $args);
     }
