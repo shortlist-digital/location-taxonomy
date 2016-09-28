@@ -15,6 +15,34 @@ class LocationTaxonomy
     public function __construct()
     {
         add_action('init', array($this, 'register_custom_taxonomy'));
+        add_filter('post_link', array($this, 'location_permalink'), 10, 3);
+        add_filter('post_type_link', array($this, 'location_permalink'), 10, 3);
+    }
+
+    public function location_permalink($permalink, $post_id, $leavename)
+    {
+        // No location in the permalink so bail out
+        if (strpos($permalink, '%location%') === false) {
+            return $permalink;
+        }
+
+        // If no post is returned for some reason bail out
+        $post = get_post($post_id);
+        if (!$post) {
+            return $permalink;
+        }
+
+
+        // Tryr and get value of the 'location' field
+        $terms = wp_get_object_terms($post->ID, 'location');
+        if (!is_wp_error($terms) && !empty($terms) && is_object($terms[0])) {
+            $taxonomy_slug = $terms[0]->slug;
+        } else {
+            // set a default if one isn't set.
+            $taxonomy_slug = 'uk';
+        }
+
+        return str_replace('%location%', $taxonomy_slug, $permalink);
     }
 
     public function register_custom_taxonomy()
