@@ -15,7 +15,6 @@ class LocationTaxonomy
     public function __construct()
     {
         add_action('init', array($this, 'register_custom_taxonomy'));
-        add_action('init', array($this, 'regisiter_custom_fields'));
     }
 
     public function register_custom_taxonomy()
