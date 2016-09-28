@@ -17,7 +17,7 @@ class LocationTaxonomy
         add_action('init', array($this, 'register_custom_taxonomy'));
         add_filter('post_link', array($this, 'location_permalink'), 10, 3);
         add_filter('post_type_link', array($this, 'location_permalink'), 10, 3);
-        add_filter('timber_context', array($this, 'add_to_context'), 10, 3);
+        add_filter('timber_context', array($this, 'add_location_to_context'), 10, 3);
     }
 
     public function add_location_to_context($context)
