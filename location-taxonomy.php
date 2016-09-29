@@ -1,4 +1,3 @@
-
 <?php
 /**
 * @wordpress-plugin
@@ -10,6 +9,7 @@
 * Author URI: http://shortlist.studio
 * License: MIT
 */
+
 class LocationTaxonomy
 {
     public function __construct()
@@ -21,7 +21,6 @@ class LocationTaxonomy
         add_filter('agreable_base_theme_category_widgets_acf', array($this, 'apply_acf_to_location'), 10, 1);
         add_filter('agreable_base_theme_social_media_acf', array($this, 'apply_acf_to_location'), 10, 1);
         add_filter('agreable_base_theme_html_overrides_acf', array($this, 'apply_acf_to_location'), 10, 1);
-        add_filter('agreable_base_theme_article_basic_acf', array($this, 'apply_acf_to_location'), 10, 1);
     }
 
     public function apply_acf_to_location($acf_fields)
