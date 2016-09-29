@@ -18,13 +18,30 @@ class LocationTaxonomy
         add_filter('post_link', array($this, 'location_permalink'), 10, 3);
         add_filter('post_type_link', array($this, 'location_permalink'), 10, 3);
         add_filter('timber_context', array($this, 'add_location_to_context'), 10, 3);
+        add_filter('agreable_base_theme_category_widgets_acf', array($this, 'apply_acf_to_location'), 10, 1);
+        add_filter('agreable_base_theme_social_media_acf', array($this, 'apply_acf_to_location'), 10, 1);
+        add_filter('agreable_base_theme_html_overrides_acf', array($this, 'apply_acf_to_location'), 10, 1);
+        add_filter('agreable_base_theme_article_basic_acf', array($this, 'apply_acf_to_location'), 10, 1);
+    }
+
+    public function apply_acf_to_location($acf_fields)
+    {
+        array_push($acf_fields['location'], array(
+            array(
+                'param' => 'taxonomy',
+                'operator' => '==',
+                'value' => 'location',
+            ),
+        ));
+        return $acf_fields;
     }
 
     public function add_location_to_context($context)
     {
         global $post;
-        $context['locations'] = get_the_terms($post->ID, 'location');
-        echo "<pre>";
+        if ($post) {
+            $context['locations'] = get_the_terms($post->ID, 'location');
+        }
         return $context;
     }
 
