@@ -133,9 +133,12 @@ class LocationTaxonomy
          'show_admin_column'          => true,
          'show_in_nav_menus'          => true,
          'show_tagcloud'              => false,
-         'rewrite'                      => true,
+         'rewrite'                      => array(
+              'slug' => '/',
+              'with_front' => false
+         ),
          'show_in_rest'       => true,
-         'rest_base'          => 'location',
+         'rest_base'          => 'locations',
          'rest_controller_class' => 'WP_REST_Terms_Controller',
        );
         register_taxonomy('location', array( 'post', ' category', ' page' ), $args);
