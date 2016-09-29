@@ -10,6 +10,8 @@
 * License: MIT
 */
 
+use remove_meta_box;
+
 class LocationTaxonomy
 {
     public function __construct()
@@ -21,6 +23,35 @@ class LocationTaxonomy
         add_filter('agreable_base_theme_category_widgets_acf', array($this, 'apply_acf_to_location'), 10, 1);
         add_filter('agreable_base_theme_social_media_acf', array($this, 'apply_acf_to_location'), 10, 1);
         add_filter('agreable_base_theme_html_overrides_acf', array($this, 'apply_acf_to_location'), 10, 1);
+        add_filter('admin_menu', array($this, 'remove_location_box'), 10, 1);
+        add_Filter('agreable_base_theme_article_basic_acf', array($this, 'add_nice_location_selector'), 10, 2);
+    }
+
+    public function remove_location_box()
+    {
+        remove_meta_box('locationdiv', 'post', 'normal');
+    }
+
+    public function add_nice_location_selector($acf_fields, $key)
+    {
+        $locationSelector = array(
+            'key' => $key . '_location',
+            'label' => 'Location',
+            'name' => 'location',
+            'type' => 'taxonomy',
+            'instructions' => 'Select a location for this content to live under',
+            'required' => 1,
+            'taxonomy' => 'location',
+            'field_type' => 'select',
+            'allow_null' => 0,
+            'add_term' => 0,
+            'save_terms' => 1,
+            'load_terms' => 1,
+            'return_format' => 'object',
+            'multiple' => 0,
+        );
+        array_push($acf_fields['fields'], $locationSelector);
+        return $acf_fields;
     }
 
     public function apply_acf_to_location($acf_fields)
