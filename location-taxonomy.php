@@ -10,15 +10,13 @@
 * License: MIT
 */
 
-use remove_meta_box;
-
 class LocationTaxonomy
 {
     public function __construct()
     {
         add_action('init', array($this, 'register_custom_taxonomy'));
-        add_filter('post_link', array($this, 'location_permalink'), 10, 3);
-        add_filter('post_type_link', array($this, 'location_permalink'), 10, 3);
+        // add_filter('post_link', array($this, 'location_permalink'), 10, 3);
+        // add_filter('post_type_link', array($this, 'location_permalink'), 10, 3);
         add_filter('timber_context', array($this, 'add_location_to_context'), 10, 3);
         add_filter('agreable_base_theme_category_widgets_acf', array($this, 'apply_acf_to_location'), 10, 1);
         add_filter('agreable_base_theme_social_media_acf', array($this, 'apply_acf_to_location'), 10, 1);
@@ -141,7 +139,7 @@ class LocationTaxonomy
             'rest_base'          => 'locations',
             'rest_controller_class' => 'WP_REST_Terms_Controller',
         );
-        register_taxonomy('location', array( 'post', ' category', ' page' ), $args);
+        register_taxonomy('location', array( 'post' ), $args);
     }
 }
 new LocationTaxonomy();
