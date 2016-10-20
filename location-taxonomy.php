@@ -18,6 +18,7 @@ class LocationTaxonomy
         // add_filter('post_link', array($this, 'location_permalink'), 10, 3);
         // add_filter('post_type_link', array($this, 'location_permalink'), 10, 3);
         add_filter('timber_context', array($this, 'add_location_to_context'), 10, 3);
+        add_filter('agreable_base_theme_article_basic_acf', array($this, 'apply_acf_to_location'), 10, 1);
         add_filter('agreable_base_theme_category_widgets_acf', array($this, 'apply_acf_to_location'), 10, 1);
         add_filter('agreable_base_theme_social_media_acf', array($this, 'apply_acf_to_location'), 10, 1);
         add_filter('agreable_base_theme_html_overrides_acf', array($this, 'apply_acf_to_location'), 10, 1);
