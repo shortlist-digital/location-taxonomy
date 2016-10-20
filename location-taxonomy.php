@@ -68,7 +68,7 @@ class LocationTaxonomy
     {
         global $post;
         if ($post) {
-            $context['post']['locations'] = get_the_terms($post->ID, 'location');
+            $context['locations'] = get_the_terms($post->ID, 'location');
         }
         return $context;
     }
