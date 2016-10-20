@@ -150,8 +150,8 @@ class LocationTaxonomy
     }
 
     public function create_location_reference() {
-        $location = $this->get_location();
-        echo "<script>window.agreableLocation = '$location->slug'</script>";
+        $location_object = json_encode($this->get_location());
+        echo "<script>window.agreableLocation = " . $location_object . "</script>";
     }
 }
 new LocationTaxonomy();
