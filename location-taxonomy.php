@@ -23,6 +23,13 @@ class LocationTaxonomy
         add_filter('agreable_base_theme_html_overrides_acf', array($this, 'apply_acf_to_location'), 10, 1);
         add_filter('admin_menu', array($this, 'remove_location_box'), 10, 1);
         add_Filter('agreable_base_theme_article_basic_acf', array($this, 'add_nice_location_selector'), 10, 2);
+
+        add_action('wp_head', array($this, 'create_location_reference'));
+    }
+
+    private function get_location() {
+        global $post;
+        return get_the_terms($post->ID, 'location')[0];
     }
 
     public function remove_location_box()
@@ -68,7 +75,7 @@ class LocationTaxonomy
     {
         global $post;
         if ($post) {
-            $context['locations'] = get_the_terms($post->ID, 'location');
+            $context['locations'] = $this->get_location();
         }
         return $context;
     }
@@ -140,6 +147,11 @@ class LocationTaxonomy
             'rest_controller_class' => 'WP_REST_Terms_Controller',
         );
         register_taxonomy('location', array( 'post' ), $args);
+    }
+
+    public function create_location_reference() {
+        $location_object = json_encode($this->get_location());
+        echo "<script>window.agreableLocation = " . $location_object . "</script>";
     }
 }
 new LocationTaxonomy();
