@@ -30,7 +30,11 @@ class LocationTaxonomy
 
     private function get_location() {
         global $post;
-        return get_the_terms($post->ID, 'location')[0];
+        if (!empty($post)) {
+       		return get_the_terms($post->ID, 'location')[0];
+        } else {
+        	return null;
+        }
     }
 
     public function remove_location_box()
